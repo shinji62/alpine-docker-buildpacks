@@ -1,0 +1,60 @@
+---
+jobs:
+- name: build-ship-it
+  serial: true
+  public: true
+  plan:
+  - aggregate:
+    - get: alpine-docker-image
+      trigger: true
+      params:
+        skip_download: true
+    - get: alpine-docker-buildpacks
+      trigger: true
+  - put: version
+    params: 
+      bump: minor
+      annotate: version/number
+  - put: alpine-docker-buildpacks-image
+    params:
+      build: alpine-docker-buildpacks/
+      tag: version/number
+      tag_as_latest: true
+  - put: alpine-docker-buildpacks 
+    params: 
+      only_tag: true
+      repository: alpine-docker-buildpacks
+      tag: version/number
+
+      
+resources:
+- name: alpine-docker-buildpacks
+  type: git
+  source:
+    uri: git@github.com:shinji62/alpine-docker-buildpacks.git
+    branch: master
+    private_key: {{private-key-github-concourse}}
+
+- name: alpine-docker-buildpacks-image
+  type: docker-image
+  source:
+    repository: getourneau/alpine-docker-buildpacks
+    email: {{email-docker-hub}}
+    username: {{username-docker-hub}}
+    password: {{password-docker-hub}}
+
+- name: alpine-docker-image
+  type: docker-image
+  source:
+    repository: alpine
+
+- name: version
+  type: semver
+  source:
+    driver: git
+    uri: git@github.com:shinji62/version-concourse.git
+    branch: master
+    file: alpine-docker-buildpacks/version
+    private_key: {{private-key-github-concourse}}
+    git_user: {{concourse-user-gitinfo}}
+
