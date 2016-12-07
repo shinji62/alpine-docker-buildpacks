@@ -11,4 +11,4 @@ RUN apk add --update \
     openssh \
     zip \
     ruby \
-    awscli && rm /var/cache/apk/*	
+    awscli 
