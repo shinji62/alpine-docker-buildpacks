@@ -11,9 +11,15 @@ RUN apk add --update \
     openssh \
     zip \
     ruby \
+    ruby-bundler \
+    build-base \
+    ruby-dev \
     python py-pip && \
-	pip install awscli && \
-	apk --purge -v del py-pip && \
-    sudo gem install json yaml\
-	rm /var/cache/apk/*
+    pip install awscli && \
+    gem install rdoc && \
+    gem install json --no-rdoc --no-ri && \
+    apk --purge -v del \
+    py-pip \
+    build-base ruby-dev && \
+    rm /var/cache/apk/*
 
