@@ -10,6 +10,7 @@ RUN apk add --update \
     openssh-client \
     openssh \
     zip \
+    rsync \
     ruby \
     ruby-bundler \
     build-base \
