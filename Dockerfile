@@ -15,8 +15,7 @@ RUN apk add --update \
     build-base \
     ruby-dev \
     python py-pip && \
-    pip install awscli && \
-    gem install rdoc && \
+    pip install --trusted-host pypi.python.org awscli && \
     gem install json --no-rdoc --no-ri && \
     apk --purge -v del \
     py-pip \
