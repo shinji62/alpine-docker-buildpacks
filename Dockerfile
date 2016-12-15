@@ -7,6 +7,7 @@ RUN apk add --update \
     bash \
     git \
     tar \
+    curl \
     openssh-client \
     openssh \
     zip \
