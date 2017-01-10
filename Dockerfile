@@ -21,6 +21,6 @@ RUN apk add --update \
     gem install json --no-rdoc --no-ri && \
     apk --purge -v del \
     py-pip \
-    build-base ruby-dev && \
+    build-base && \
     rm /var/cache/apk/*
 
